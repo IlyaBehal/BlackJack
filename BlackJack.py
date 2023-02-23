@@ -1,3 +1,6 @@
+from random import shuffle
+
+
 class Card(object):
     def __init__(self, rank, suit):
         self.rank = rank
@@ -45,3 +48,13 @@ class Hand(object):
         text += f"\nHand value: {self.get_value()}"
         return text
 
+
+class Deck(object):
+    def __init__(self):
+        ranks = "23456789TJQKA"
+        suits = "DCHS"
+        self.cards = [Card(r, s) for r in ranks for s in suits]  # list generator is creating full deck
+        shuffle(self.cards)  # shuffle the deck
+
+    def deal_card(self):
+        return self.cards.pop()
