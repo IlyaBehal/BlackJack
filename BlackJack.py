@@ -58,3 +58,44 @@ class Deck(object):
 
     def deal_card(self):
         return self.cards.pop()
+
+
+def new_game():
+    d = Deck()
+    player_hand = Hand("Player")
+    dealer_hand = Hand("Dealer")
+    player_hand.add_card(d.deal_card())  # give two cards to player
+    player_hand.add_card(d.deal_card())
+    dealer_hand.add_card(d.deal_card())  # give one card to dealer
+    print(dealer_hand)
+    print("="*20)
+    print(player_hand)
+    in_game = True  # flag for check
+    while player_hand.get_value() < 21:
+        ans = input("Hit or stand? (h/s) ")
+        if ans == "h":
+            player_hand.add_card(d.deal_card())
+            print(player_hand)
+            if player_hand.get_value() > 21:  # if player has 21+ point - he lose
+                print("You lose")
+                in_game = False
+        else:
+            print("You stand!")
+            break
+    print("=" * 20)
+    if in_game:
+        while dealer_hand.get_value() < 17:  # rules game
+            dealer_hand.add_card(d.deal_card())
+            print(dealer_hand)
+            if dealer_hand.get_value() > 21:  # if dealer has 21+ point - he lose
+                print("Dealer bust")
+                in_game = False
+    if in_game:
+        if player_hand.get_value() > dealer_hand.get_value():
+            print("You win")
+        else:
+            print("Dealer win")
+
+
+if __name__ == '__main__':
+    new_game()
